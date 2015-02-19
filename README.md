@@ -32,6 +32,7 @@ less-proxy is based on top of express, so just start the server as you would sta
 ```shell
 DEBUG=bewi_css_preprocessor:* ./bin/www
 ```
+Note: Have a look at the ./etc/env.js to configure the allowed templates list and the cached file directory for the "On Demand" mode
 
 ## API
 
@@ -42,18 +43,22 @@ less-proxy can work in two ways:
 #### On demand
 Make a POST request, containing a template name, destination file name, and an object containing the variables you want to set as globalVars or modifyVars, less-proxy will evaluate the template name against a predetermined list of files, load it, parse it with your variables object, and save the result to a cache folder under the destination file set you chose.
 
-The POST request must be made to http://localhost:3000>/proxy (or whatever you set as environment variable)
+The POST request must be made to http://localhost:3000/proxy (or whatever you set as environment variable)
 
 The POST data must contain three variables:
 * template: name of the .less template file to use, and located under ./templates, ie: "example.lss"
 * destination: name of final processed file, ie: "example.css"
 * variables: a JSON encoded object containing key/value pairs, ie: {"myAwesomeVar": "blue"}
 
+In case of success, less-proxy will return a JSON object like: {"status": "success", "file": "example.css"}
+
 #### Streaming
 Make a POST request, containing the content of a CSS file, and an object containing the variables you want to set as globalVars or modifyVars, less-proxy will parse your providen CSS stringified file with your variables object, and stream the result back to you.
 
-The POST request must be made to http://localhost:3000>/proxy (or whatever you set as environment variable)
+The POST request must be made to http://localhost:3000/proxy (or whatever you set as environment variable)
 
 The POST data must contain two variables:
 * css: a css string, or stringified css file
 * variables: a JSON encoded object containing key/value pairs, ie: {"myAwesomeVar": "blue"}
+
+In case of success, less-proxy will stream back the processed and compiled CSS file
