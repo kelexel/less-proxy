@@ -1,4 +1,6 @@
-# less-proxy v0.0.1
+# less-proxy
+
+v0.0.1
 
 ## About
 
